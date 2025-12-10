@@ -1,0 +1,11 @@
+{
+  "templater-obsidian:templates/bash.md": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "B"
+    }
+  ]
+}

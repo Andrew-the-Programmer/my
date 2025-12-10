@@ -1,0 +1,90 @@
+# Install
+
+```bash
+yay -S tmux
+```
+
+# Setup
+
+1. Put `tmux.conf` in `~/.config/tmux/`.
+2. Install [tpm](https://github.com/tmux-plugins/tpm) with 
+	```bash
+	git clone "git@github.com:tmux-plugins/tpm.git" ~/.config/tmux/plugins/tpm
+```
+3. Open tmux session
+4. With `prefix + I` install all plugins.
+   > default `prefix` is `C-b`
+5. Reload config with `tmux source ~/.config/tmux/tmux.conf`
+
+# My Config
+
+```bash
+# Options
+set -g set-clipboard on
+# set -s set-clipboard off
+
+# Bad idea
+#set -g default-terminal "screen-256color"
+#set -ag terminal-overrides ",xterm-256color:RGB"
+
+set -g prefix C-a
+set-option -g default-shell /bin/zsh
+set-option -g status-position top
+# set show-mode-in-prompt on
+
+# Mouse
+set -g mouse on
+
+# Copy Mode
+set-window-option -g mode-keys vi
+bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
+bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
+# bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel "pbcopy"
+unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode when dragging with mouse
+# unbind -n MouseDrag1Pane
+# remove delay for exiting insert mode with ESC in Neovim
+set -sg escape-time 10
+
+
+# Bindings
+unbind r
+bind r source-file $HOME/.config/tmux/tmux.conf
+bind-key h select-pane -L
+bind-key j select-pane -D
+bind-key k select-pane -U
+bind-key l select-pane -R
+
+bind -r m resize-pane -Z
+
+# tpm plugin
+set -g @plugin 'tmux-plugins/tpm'
+
+# set -g @plugin 'catppuccin/tmux'
+# run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
+set -g @catppuccin_flavor 'frappe' # latte, frappe, macchiato, mocha
+set -g status-right-length 100
+set -g status-left-length 100
+set -g status-left ""
+set -g status-right ""
+set -ag status-right "#{E:@catppuccin_status_session}"
+# set -g status-right "#{E:@catppuccin_status_application}"
+# set -agF status-right "#{E:@catppuccin_status_cpu}"
+# set -ag status-right "#{E:@catppuccin_status_uptime}"
+# set -agF status-right "#{E:@catppuccin_status_battery}"
+
+set -g @resurrect-strategy-nvim 'session'
+set -g @resurrect-capture-pane-contents 'on'
+set -g @continuum-restore 'on'
+
+set -g @plugin 'christoomey/vim-tmux-navigator'
+
+set -g @plugin 'tmux-plugins/tmux-resurrect' # persist tmux sessions after computer restart
+
+set -g @plugin 'tmux-plugins/tmux-continuum' # automatically saves sessions for you every 15 minutes
+
+set -g @plugin 'catppuccin/tmux'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.config/tmux/plugins/tpm/tpm'
+
+```
