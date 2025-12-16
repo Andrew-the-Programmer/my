@@ -8,6 +8,7 @@ archi nerd-fonts fzf jump bat tmux zsh stow
 archi google-chrome telegram-desktop discord bitwarden
 
 archi prettier typos
+archi stylua ruff selene
 archi shfmt shellharden beautysh
 archi python-black python-isort python-pylint
 archi mdformat tex-fmtdis
