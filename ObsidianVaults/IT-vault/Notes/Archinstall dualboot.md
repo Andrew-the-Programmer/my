@@ -104,13 +104,16 @@ Install.
 # Post archinstall
 
 1. Select option chroot.
-2. Exit chroot.
-3. Unmount /mnt: 
+2. IMPORTANT! Set mirrors with reflector.
+	1. `pacman -S reflector`
+	2. `reflector --country 'Russia' --score 20 --sort rate --save`
+	3. Wait a bit
+3. Exit chroot.
+4. Unmount /mnt: 
    ```bash
 	> umount -lR /mnt
 	```
-4. `reboot now`
-5. remove boot usb
+5. `reboot now` and remove boot usb
 6. Install omarchy with
    ```bash
    > curl -fsSL https://omarchy.org/install | bash

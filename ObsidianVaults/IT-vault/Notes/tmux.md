@@ -9,7 +9,7 @@ yay -S tmux
 1. Put `tmux.conf` in `~/.config/tmux/`.
 2. Install [tpm](https://github.com/tmux-plugins/tpm) with 
 	```bash
-	git clone "git@github.com:tmux-plugins/tpm.git" ~/.config/tmux/plugins/tpm
+> git clone "git@github.com:tmux-plugins/tpm.git" ~/.config/tmux/plugins/tpm
 ```
 3. Open tmux session
 4. With `prefix + I` install all plugins.
