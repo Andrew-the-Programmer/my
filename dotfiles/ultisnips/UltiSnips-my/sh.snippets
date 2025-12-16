@@ -1,0 +1,30 @@
+snippet shebang "shebang" bA
+#!/bin/bash
+endsnippet
+
+snippet tpl "template" bA
+#!/bin/bash
+
+$0
+endsnippet
+
+snippet cds "cd to script file dir"
+cd "$(dirname "\$0")" || exit
+$0
+endsnippet
+
+snippet func "function template"
+function ${1:name}() {
+	$0
+}
+endsnippet
+
+snippet if "if ... then (if)"
+if ${2:[[ ${1:condition} ]]}; then
+    ${0:#statements}
+fi
+endsnippet
+
+snippet list "expand list"
+"\$\{${1:array}[@]\}"$0
+endsnippet

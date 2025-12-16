@@ -1,0 +1,62 @@
+#!/bin/bash
+
+subpackages=(
+    # "UltiSnips-my"
+    # "UltiSnips-vsnip"
+)
+
+function DefPackageName() {
+	basename "$PWD"
+}
+
+function Init() {
+	cd "$(dirname "$0")" || exit
+}
+
+function Exit() {
+	exit $?
+}
+
+function ExportSubpackages() {
+	for subpackage in "${subpackages[@]}"; do
+		eval "./$subpackage/.export"
+	done
+}
+
+function Export() {
+	package_name="$(DefPackageName)"
+
+    target_dirs=("$HOME/.config/nvim")
+
+    for td in "${target_dirs[@]}"; do
+        mkdir -p "$td"
+
+        cd .. || exit
+
+        cmd="stow"
+
+        args=(
+            "-t"
+            "$td"
+            "--dotfiles"
+            "--ignore"
+            ".export"
+            "--ignore"
+            "vim-snippets"
+            "$package_name"
+        )
+
+        for subpackage in "${subpackages[@]}"; do
+            args+=("--ignore $subpackage")
+        done
+
+        eval "${cmd} ${args[*]}"
+    done
+
+	return $?
+}
+
+Init
+ExportSubpackages
+Export
+Exit

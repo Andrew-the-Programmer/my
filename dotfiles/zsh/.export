@@ -1,0 +1,57 @@
+#!/bin/bash
+
+subpackages=(
+    "zshenv"
+)
+
+function DefPackageName() {
+	basename "$PWD"
+}
+
+function Init() {
+	cd "$(dirname "$0")" || exit
+}
+
+function Exit() {
+	exit $?
+}
+
+function ExportSubpackages() {
+	for subpackage in "${subpackages[@]}"; do
+		eval "./$subpackage/.export"
+	done
+}
+
+function Export() {
+	package_name="$(DefPackageName)"
+
+	config_dir="$HOME/.config/$package_name"
+
+    targets=(
+        "source"
+        "plugins-config"
+        "p10k-configs"
+        "plugin-functions.sh"
+        "zshrc.sh"
+        ".zshrc"
+    )
+
+	mkdir -p "$config_dir"
+
+    for target in "${targets[@]}"; do
+        src="$PWD/$target"
+        dst="$config_dir/$target"
+        if [ -e "$dst" ]; then
+            continue
+        fi
+        ln -sdf "$src" "$dst" ||
+            ( echo "Failed to link $target" && exit 1 )
+    done
+
+	return $?
+}
+
+Init
+ExportSubpackages
+Export
+Exit

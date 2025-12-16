@@ -1,0 +1,56 @@
+#!/bin/bash
+
+subpackages=(
+)
+
+function DefPackageName() {
+	basename "$PWD"
+}
+
+function Init() {
+	cd "$(dirname "$0")" || exit
+}
+
+function Exit() {
+	exit $?
+}
+
+function ExportSubpackages() {
+	for subpackage in "${subpackages[@]}"; do
+		eval "./$subpackage/.export"
+	done
+}
+
+function Export() {
+	package_name="$(DefPackageName)"
+
+	config_dir="$HOME/texmf/tex/latex"
+
+	mkdir -p "$config_dir"
+
+	cd .. || exit
+
+	cmd="stow"
+
+	args=(
+		"-t"
+		"$config_dir"
+		"--dotfiles"
+		"--ignore"
+		".export"
+		"$package_name"
+	)
+
+	for subpackage in "${subpackages[@]}"; do
+		args+=("--ignore $subpackage")
+	done
+
+	eval "${cmd} ${args[*]}"
+
+	return $?
+}
+
+Init
+ExportSubpackages
+Export
+Exit

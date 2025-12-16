@@ -1,0 +1,3 @@
+set recolor true
+set default-bg \#222230
+set selection-clipboard clipboard

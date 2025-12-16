@@ -1,0 +1,40 @@
+#!/bin/bash
+
+function DefPackageName() {
+	basename "$PWD"
+}
+
+function Init() {
+	cd "$(dirname "$0")" || exit
+}
+
+function Exit() {
+	exit $?
+}
+
+function Export() {
+	package_name="$(DefPackageName)"
+
+	config_dir="~"
+
+	cd .. || exit
+
+	cmd="stow"
+
+	args=(
+		"-t"
+		"$config_dir"
+		"--dotfiles"
+		"--ignore"
+		".export"
+		"$package_name"
+	)
+
+	eval "${cmd} ${args[*]}"
+
+	return $?
+}
+
+Init
+Export
+Exit

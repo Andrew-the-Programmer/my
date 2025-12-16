@@ -1,0 +1,89 @@
+global !p
+def comment():
+	return False
+
+def env(name):
+	return False
+endglobal
+
+snippet mi "Math inline" w
+\$$1\$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+	snip.rv = ' '
+else:
+	snip.rv = ''
+`$2
+endsnippet
+
+snippet mb "Math block" w
+$$
+${1:${VISUAL}}
+$$
+endsnippet
+
+context "env('itemize')"
+snippet item "ldots" i
+\item $0
+endsnippet
+
+snippet definition "\dfn" w
+# Definition
+
+$0
+endsnippet
+
+snippet theorem "\thm" w
+# Theorem
+
+$0
+endsnippet
+
+snippet lemma "\mlemma" w
+# Lemma
+
+$0
+endsnippet
+
+snippet claim "" w
+# Claim
+
+$0
+endsnippet
+
+snippet if "" b
+## If:
+
+$0
+endsnippet
+
+snippet then "" b
+## Then:
+
+$0
+endsnippet
+
+snippet proof "" b
+## Proof:
+
+$0
+endsnippet
+
+snippet assume "" b
+\`Предположим:\`
+$0
+endsnippet
+
+snippet leten "" b
+\`Let:\`
+$0
+endsnippet
+
+snippet thenen "" b
+\`Then:\`
+$0
+endsnippet
+
+snippet assumeen "" b
+\`Assume:\`
+$0
+endsnippet

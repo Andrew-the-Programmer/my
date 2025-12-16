@@ -1,0 +1,19 @@
+snippet main_init "main() template" b
+def main() -> None:
+	$0
+
+
+if __name__ == "__main__":
+	main()
+endsnippet
+
+snippet func "function" b
+def $1($2) -> $3:
+	$0
+endsnippet
+
+snippet shb "Shebang" b
+#!/usr/bin/env python3
+
+$0
+endsnippet

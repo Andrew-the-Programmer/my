@@ -1,0 +1,63 @@
+\newcommand\getcurrentref[1]{%
+	\ifnumequal{\value{#1}}{0}
+	{??}
+	{\the\value{#1}}%
+}
+\newcommand{\getCurrentSectionNumber}{\getcurrentref{section}}
+\newcounter{mylabelcounter}
+
+\makeatletter
+\newcommand{\setword}[2]{%
+	\phantomsection
+	#1\def\@currentlabel{\unexpanded{#1}}\label{#2}%
+}
+\makeatother
+
+\tikzset{
+	symbol/.style={
+			draw=none,
+			every to/.append style={
+					edge node={node [sloped, allow upside down, auto=false]{$#1$}}}
+		}
+}
+
+\newsavebox\diffdbox
+\newcommand{\slantedromand}{{\mathpalette\makesl{d}}}
+\newcommand{\makesl}[2]{%
+	\begingroup
+	\sbox{\diffdbox}{$\mathsurround=0pt#1\mathrm{#2}$}%
+	\pdfsave
+	\pdfsetmatrix{1 0 0.2 1}%
+	\rlap{\usebox{\diffdbox}}%
+	\pdfrestore
+	\hskip\wd\diffdbox
+	\endgroup
+}
+\newcommand{\dd}[1][]{\ensuremath{\mathop{}\!\ifstrempty{#1}{%
+			\slantedromand\@ifnextchar^{\hspace{0.2ex}}{\hspace{0.1ex}}}%
+		{\slantedromand\hspace{0.2ex}^{#1}}}}
+
+\ProvideDocumentCommand\dv{o m g}{%
+	\ensuremath{%
+		\IfValueTF{#3}{%
+			\IfNoValueTF{#1}{%
+				\frac{\dd #2}{\dd #3}%
+			}{%
+				\frac{\dd^{#1} #2}{\dd #3^{#1}}%
+			}%
+		}{%
+			\IfNoValueTF{#1}{%
+				\frac{\dd}{\dd #2}%
+			}{%
+				\frac{\dd^{#1}}{\dd #2^{#1}}%
+			}%
+		}%
+	}%
+}
+
+\providecommand*{\pdv}[3][]{\frac{\partial^{#1}#2}{\partial#3^{#1}}}
+%  - others
+\DeclareMathOperator{\Lap}{\mathcal{L}}
+\DeclareMathOperator{\Var}{Var} % varience
+\DeclareMathOperator{\Cov}{Cov} % covarience
+\DeclareMathOperator{\E}{E} % expected

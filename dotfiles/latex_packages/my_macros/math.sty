@@ -1,0 +1,158 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MATH
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\mb}[1]{\stackrel{?}{#1}}
+\newcommand{\imb}[1]{\hspace{2pt}\rlap{?}#1\hspace{2pt}}
+
+\newcommand{\st}{^{'}}
+
+\newcommand{\eq}{=}
+\newcommand{\defeq}{\overset{\mathrm{def}}{=}}
+\newcommand{\ldefeq}{\coloneqq}
+\newcommand{\rdefeq}{\eqqcolon}
+
+\let\oldleq\leq
+\let\oldgeq\geq
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\let\le\leq
+\let\ge\geq
+
+\newcommand{\ol}{\overline}
+\newcommand{\ul}{\underline}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+
+\newcommand{\surround}[3]{\left#1#3\right#2}
+\newcommand{\surrounda}[3]{\surround{#1}{#3}{#2}}
+\newcommand{\set}[1]{\surround\{\}{#1}}
+\newcommand{\group}[1]{\surround(){#1}}
+\newcommand{\groupr}[1]{\surround[]{#1}}
+\newcommand{\groupt}[1]{\surround<>{#1}}
+
+\newcommand{\same}{\Longleftrightarrow}
+\newcommand{\taking}[1]{\xrightarrow{#1}}
+\newcommand{\ts}{\textsuperscript}
+\newcommand{\then}{\rightarrow}
+\newcommand{\hthen}{\hookrightarrow}
+
+% OPERATIONS
+
+\renewcommand{\d}[1][]{\mathrm{d} #1}
+\renewcommand{\boundary}[1]{\partial #1}
+\renewcommand{\D}[1]{\Delta #1}
+
+\newcommand{\grad}{\nabla}
+\newcommand{\gradv}{\vec{\grad}}
+
+\newcommand{\Laplace}{\mathop{}\!\mathbin\bigtriangleup}
+\newcommand{\DAlambert}{\mathop{}\!\mathbin\Box}
+\newcommand{\Nabla}{\grad}
+
+% DERIVATIVES
+
+\newcommand{\deriv}[4][]{\frac{#4^{#1} #3}{{#4 #2}^{#1}}}
+
+\newcommand{\pdv}[3][]{\deriv[#1]{#2}{#3}{\partial}}
+\newcommand{\pDv}[3][]{\pdv[#1]{#2}{} \left(#3\right)}
+
+\newcommand{\vdv}[3][]{\deriv[#1]{#2}{#3}{\delta}}
+\newcommand{\vDv}[3][]{\vdv[#1]{#2}{} \left(#3\right)}
+
+\newcommand{\dv}[3][]{\deriv[#1]{#2}{#3}{\d}}
+\newcommand{\Dv}[3][]{\dv[#1]{#2}{} \left(#3\right)}
+
+\newcommand{\ddt}[1]{\Dv{t}{#1}}
+
+% VECTOR OPERATIONS
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+
+\newcommand{\vecprod}[2]{\left<#1, #2\right>}
+\newcommand{\vecprodv}[2]{\vecprod{\vec{#1}}{\vec{#2}}}
+\newcommand{\vecprods}[2]{#1 \times #2}
+\newcommand{\vecprodsv}[2]{\vecprods{\vec{#1}}{\vec{#2}}}
+\newcommand{\veccross}[2]{\left(#1, #2\right)}
+\newcommand{\veccrossv}[2]{\veccross{\vec{#1}}{\vec{#2}}}
+
+\newcommand{\VecProd}[2]{\vecprod{#1}{#2}}
+\newcommand{\VecProdV}[2]{\VecProd{\vec{#1}}{\vec{#2}}}
+
+\newcommand{\VecProdS}[2]{\vecprods{#1}{#2}}
+\newcommand{\VecProdSV}[2]{\VecProdS{\vec{#1}}{\vec{#2}}}
+
+\newcommand{\VecCross}[2]{\veccross{#1}{#2}}
+\newcommand{\VecCrossV}[2]{\VecCross{\vec{#1}}{\vec{#2}}}
+
+\newcommand{\VecCrossS}[2]{#1 \cdot #2}
+\newcommand{\VecCrossSV}[2]{\VecCrossS{\vec{#1}}{\vec{#2}}}
+
+% FUNCTIONS
+
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\round}[1]{\lfloor #1 \rceil}
+
+\renewcommand{\exp}[1]{\mathrm{exp}\left(#1\right)}
+\newcommand{\e}[1]{e^{#1}}
+
+\newcommand{\avrg}[1]{\left<#1\right>}
+\newcommand{\xor}{\triangle}
+
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\ctg}{ctg}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\sh}{sh}
+\DeclareMathOperator{\th}{th}
+\DeclareMathOperator{\cth}{cth}
+
+\DeclareMathOperator{\Img}{Im} % Image
+\DeclareMathOperator{\Ker}{Ker} % Kernel
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Spec}{Spec} % spectrum
+\DeclareMathOperator{\Tr}{Tr} % trace
+\DeclareMathOperator{\pr}{pr} % projection
+\DeclareMathOperator{\ext}{ext} % extension
+\DeclareMathOperator{\pred}{pred} % predecessor
+\DeclareMathOperator{\img}{im} % Image
+\DeclareMathOperator{\dom}{dom} % domain
+\DeclareMathOperator{\ran}{ran} % range
+\DeclareMathOperator{\Mor}{More} % morphisms
+\DeclareMathOperator{\End}{End} % endomorphism
+\DeclareMathOperator{\rot}{rot} % endomorphism
+\DeclareMathOperator{\divv}{div} % endomorphism
+
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\sign}{sign}
+
+% ARROWS
+
+% https://tex.stackexchange.com/questions/86238/searching-for-up-and-down-arrow-symbol
+\newcommand{\updownarrows}{\mathbin\uparrow\hspace{-.3em}\downarrow}
+\newcommand{\downuparrows}{\mathbin\downarrow\hspace{-.3em}\uparrow}
+% \newcommand{\upuparrows}{\mathbin\uparrow\hspace{-.3em}\uparrow}
+% \newcommand{\downdownarrows}{\mathbin\downarrow\hspace{-.3em}\downarrow}
+
+\newcommand{\lra}{\leftrightarrow}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\xra}{\xrightarrow}
+\newcommand{\la}{\leftarrow}
+\newcommand{\uda}{\updownarrows}
+\newcommand{\dua}{\downuparrows}
+\newcommand{\uua}{\upuparrows}
+\newcommand{\dda}{\downdownarrows}
+
+% MACROS
+
+\newcommand{\dg}{^\circ}
+\newcommand{\inv}{^{-1}}
+\newcommand{\noneset}{\varnothing}
+\renewcommand{\emptyset}{\varnothing}
+\newcommand{\dang}{\measuredangle} %% Directed angle

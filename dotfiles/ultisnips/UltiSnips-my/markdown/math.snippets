@@ -1,0 +1,544 @@
+global !p
+def math():
+	cmd = "join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, \"name\")'), ' > ')"
+	res = vim.eval(cmd)
+	print(res)
+	return "mkdMath" in res
+endglobal
+
+context "math()"
+snippet eps "epsilon"
+\\epsilon$0
+endsnippet
+
+context "math()"
+snippet veps "varepsilon"
+\\varepsilon$0
+endsnippet
+
+context "math()"
+snippet omega "omega" i
+\\omega$0
+endsnippet
+
+context "math()"
+snippet delta "omega" i
+\\delta$0
+endsnippet
+
+context "math()"
+snippet alpha "alpha" i
+\\alpha$0
+endsnippet
+
+context "math()"
+snippet beta "beta" i
+\\beta$0
+endsnippet
+
+context "math()"
+snippet sr "^2" iA
+^2
+endsnippet
+
+context "math()"
+snippet cb "^3" iA
+^3
+endsnippet
+
+context "math()"
+snippet ^^ "to the ... power" iA
+^{$1}$0
+endsnippet
+
+context "math()"
+snippet __ "subscript" iA
+_{$1}$0
+endsnippet
+
+context "math()"
+snippet sq "\sqrt{}" w
+\sqrt{${1:${VISUAL}}} $0
+endsnippet
+
+context "math()"
+snippet lrbr( "lr ()" w
+\left($0\right)
+endsnippet
+
+context "math()"
+snippet lrbr{ "" w
+\left\\{$0\right\\}
+endsnippet
+
+context "math()"
+snippet lr| "" w
+\left\lvert$0\right\rvert
+endsnippet
+
+context "math()"
+snippet lr[ "left[ right]" w
+\left[${1:${VISUAL}}\right]$0
+endsnippet
+
+context "math()"
+snippet lr< "leftangle rightangle" w
+\left<${1:${VISUAL}}\right>$0
+endsnippet
+
+context "math()"
+snippet ceil "ceil" w
+\left\lceil $1 \right\rceil$0
+endsnippet
+
+context "math()"
+snippet floor "floor" w
+\left\lfloor $1 \right\rfloor$0
+endsnippet
+
+context "math()"
+snippet infty "infty" w
+\infty
+endsnippet
+
+context "math()"
+snippet Union "union"
+\bigcup_{$1}^{$2}{$0}
+endsnippet
+
+context "math()"
+snippet UnionSq "union"
+\bigsqcup_{$1}^{$2}{$0}
+endsnippet
+
+context "math()"
+snippet Intersection "intersection"
+\bigcap_{$1}^{$2}{$0}
+endsnippet
+
+context "math()"
+snippet Prod "prod"
+\prod_{$1}^{$2}{$0}
+endsnippet
+
+context "math()"
+snippet "union" "union" rw
+\cup
+endsnippet
+
+context "math()"
+snippet "intersection" "intersection" rw
+\cap
+endsnippet
+
+context "math()"
+snippet "or" "union" rw
+\lor
+endsnippet
+
+context "math()"
+snippet "and" "union" rw
+\land
+endsnippet
+
+context "math()"
+snippet "not" "union" rw
+\lnot
+endsnippet
+
+context "math()"
+snippet Or "Big logic or"
+\bigvee_{$1}^{$2}{$0}
+endsnippet
+
+context "math()"
+snippet And "Big logic and" i
+\bigwedge_{$1}^{$2}{$0}
+endsnippet
+
+context "math()"
+snippet -> "implies" iA
+\implies
+endsnippet
+
+context "math()"
+snippet <- "implied by" iA
+\impliedby
+endsnippet
+
+context "math()"
+snippet sum "sum" w
+\sum_{$1}^{$2}{$0}
+endsnippet
+
+context "math()"
+snippet lim "limit" w
+\lim_{$1 \to $2}{$0}
+endsnippet
+
+context "math()"
+snippet limsup "limsup" w
+\limsup_{$1 \to $2}{$0}
+endsnippet
+
+context "math()"
+snippet liminf "liminf" w
+\liminf_{$1 \to $2}{$0}
+endsnippet
+
+context "math()"
+snippet <= "leq" iA
+\le
+endsnippet
+
+context "math()"
+snippet >= "geq" iA
+\ge
+endsnippet
+
+context "math()"
+snippet != "neq" iA
+\neq
+endsnippet
+
+context "math()"
+snippet >> "gg" iA
+\gg
+endsnippet
+
+context "math()"
+snippet << "ll" iA
+\ll
+endsnippet
+
+context "math()"
+snippet d= "left def eq" iA
+\defeq
+endsnippet
+
+context "math()"
+snippet := "left def eq" iA
+\ldefeq
+endsnippet
+
+context "math()"
+snippet =: "right def eq" iA
+\rdefeq
+endsnippet
+
+context "math()"
+snippet "(\\?[A-Za-z0-9]+\..+)+(/)" "" wrA
+`!p
+operations_history: list[str] = []
+
+
+def ParseArgs(args: str) -> list[str]:
+    return args.split(",")
+
+
+def Perp(prefix: str, args: str = None) -> str:
+    return IndexD(prefix, r"\perp")
+
+
+def Parallel(prefix: str, args: str = None) -> str:
+    return IndexD(prefix, r"\parallel")
+
+
+def IndexD(prefix: str, index: str) -> str:
+    if len(operations_history) > 1 and operations_history[-2] == "^":
+        return f"{prefix}_{{{index}}}"
+    return f"{{{prefix}}}_{{{index}}}"
+
+
+def IndexU(prefix: str, index: str) -> str:
+    if len(operations_history) > 1 and operations_history[-2] == "_":
+        return f"{prefix}^{{{index}}}"
+    return f"{{{prefix}}}^{{{index}}}"
+
+
+def Stroke(prefix: str, args: str = None) -> str:
+    n = 1
+    if len(args) == 1:
+        n = int(args)
+    return IndexU(prefix, "'" * n)
+
+
+def addFunc(prefix: str, func: str) -> str:
+    return f"\\{func}{{{prefix}}}"
+
+
+def Vec(prefix: str, args: str = None) -> str:
+    return addFunc(prefix, "vec")
+
+
+def Dot(prefix: str, args: str = None) -> str:
+    n = 1
+    if len(args) == 1:
+        n = int(args)
+    return addFunc(prefix, "d" * n + "ot")
+
+
+def Overline(prefix: str, args: str = None) -> str:
+    return addFunc(prefix, "overline")
+
+
+def Underline(prefix: str, args: str = None) -> str:
+    return addFunc(prefix, "underline")
+
+
+def Abs(prefix: str, args: str = None) -> str:
+    return addFunc(prefix, "abs")
+
+
+def Dv(prefix: str, args: str = None) -> str:
+    return addFunc(prefix, f"Dv{{{args}}}")
+
+
+def dv(prefix: str, args: str = None) -> str:
+    return addFunc(prefix, f"dv{{{args}}}")
+
+
+def SimpleDv(prefix: str, args: str = None) -> str:
+    return IndexU(prefix, f"({args})")
+
+
+getFunc: dict[str] = {
+    "^": IndexU,
+    "_": IndexD,
+    "v": Vec,
+    "d": dv,
+    "D": Dv,
+    "o": Overline,
+    "u": Underline,
+    "a": Abs,
+    "p": Perp,
+    "P": Parallel,
+    "s": Stroke,
+    "t": Dot,
+    "T": SimpleDv,
+}
+
+
+def ParseCommand(cmd: str) -> tuple:
+    command = cmd[0]
+    args = cmd[1:]
+    operations_history.append(command)
+    return getFunc[command], args
+
+
+def ExecCommand(prefix: str, command: str):
+    func, args = ParseCommand(command)
+    s = func(prefix, args)
+    return s
+
+
+def main() -> None:
+    INPUT = match[1]
+    MATCH = r"(\\?[A-Za-z0-9]+)(\..*)+"
+    m = re.match(MATCH, INPUT)
+    prefix = m[1]
+    commands = m[2]
+    list_commands = commands.split(".")[1:]
+
+    for c in list_commands:
+        prefix = ExecCommand(prefix, c)
+
+    return prefix
+
+
+snip.rv = main()
+`
+endsnippet
+
+context "math()"
+snippet // "Fraction" iA
+\\frac{$1}{$2}$0
+endsnippet
+
+context "math()"
+snippet / "Fraction" i
+\\frac{${VISUAL}}{$1}$0
+endsnippet
+
+priority -1000
+context "math()"
+snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
+\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+endsnippet
+
+priority -1000
+context "math()"
+snippet '^.*\)/' "() frac" wrA
+`!p
+stripped = match.string[:-1]
+depth = 0
+i = len(stripped) - 1
+while True:
+	if stripped[i] == ')': depth += 1
+	if stripped[i] == '(': depth -= 1
+	if depth == 0: break;
+	i-=1
+snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
+`{$1}$0
+endsnippet
+
+context "math()"
+snippet xx "cross" iA
+\times
+endsnippet
+
+priority 100
+context "math()"
+snippet ** "cdot" iA
+\cdot
+endsnippet
+
+context "math()"
+snippet integral "integral" i
+\int_{$1}^{$2}{$0}
+endsnippet
+
+context "math()"
+snippet vec "\vec" w
+\vec{$0}
+endsnippet
+
+context "math()"
+snippet abs "\vec" w
+\abs{$0}
+endsnippet
+
+context "math()"
+snippet dot "\dot" w
+\dot{$0}
+endsnippet
+
+priority 100
+context "math()"
+snippet '(?<!\\)(sin|cos|arccot|cot|csc|ln|log|exp|star|perp) ' "math functions" rwA
+\\`!p snip.rv = match.group(1)`{$0}
+endsnippet
+
+context "math()"
+snippet text "" w
+\textit{$0}
+endsnippet
+
+# ENVIRONMENTS ------------------------------
+
+context "math()"
+snippet beg "begin{} / end{}" bA
+\begin{$1}
+$0
+\end{$1}
+endsnippet
+
+context "math()"
+snippet equationf ""
+\\Equation{
+$0
+}
+endsnippet
+
+context "math()"
+snippet equationfi ""
+\\Equation{$0}
+endsnippet
+
+context "math()"
+snippet gatherf ""
+\\Gather{
+$0
+}
+endsnippet
+
+context "math()"
+snippet gatherfi ""
+\\Gather{$0}
+endsnippet
+
+context "math()"
+snippet casesf ""
+\\Cases{
+$0
+}
+endsnippet
+
+context "math()"
+snippet casesfi ""
+\\Cases{$0}
+endsnippet
+
+context "math()"
+snippet arrayf ""
+\Array{$1}{
+$0
+}
+endsnippet
+
+context "math()"
+snippet arrayfi ""
+\Array{$1}{$0}
+endsnippet
+
+context "math()"
+snippet pmatrixf ""
+\\Pmatrix{
+$0
+}
+endsnippet
+
+context "math()"
+snippet matrix ""
+\\Matrix{
+$0
+}
+endsnippet
+
+context "math()"
+snippet pmatrixfi ""
+\\Pmatrix{$0}
+endsnippet
+
+context "math()"
+snippet alignleft ""
+\\AlignLeft{
+$0
+}
+endsnippet
+
+context "math()"
+snippet align ""
+\\Align{
+$0
+}
+endsnippet
+
+snippet alignmi ""
+\$\\Align{
+$0
+}\$
+endsnippet
+
+snippet alignmb ""
+\$\$\\Align{
+$0
+}\$\$
+endsnippet
+
+context "math()"
+snippet alignlefti ""
+\\AlignLeft{$0}
+endsnippet
+
+context "math()"
+snippet aligncenter ""
+\\AlignCenter{
+$0
+}
+endsnippet
+
+context "math()"
+snippet aligncenteri ""
+\\AlignCenter{$0}
+endsnippet

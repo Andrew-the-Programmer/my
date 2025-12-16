@@ -1,0 +1,61 @@
+context "math()"
+snippet "([A-Za-z])([nmijk\d])\2(\W)" "auto subscript 1" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}`!p snip.rv = match.group(3)`
+endsnippet
+context "math()"
+snippet "([A-Za-z])([ab])\2(\W)" "auto subscript 2" wrA
+`!p snip.rv = match.group(1)`_{\\`!p snip.rv = match.group(2)`}`!p snip.rv = match.group(3)`
+endsnippet
+context "math()"
+snippet "([A-Za-z])([v])\2(\W)" "auto subscript vec" wrA
+\\vec{`!p snip.rv = match.group(1)`}`!p snip.rv = match.group(3)`
+endsnippet
+
+context "math()"
+snippet "([A-Za-z])(nn|mm|ii|jj|kk|aa|bb|ww|dd|vv|11|22|33|44|55|66|77|88|99)+(\W)" "auto subscript 1" wrA
+`!p
+from string import digits
+
+def Index(s: str, n: str) -> str:
+	return f"{{{s}}}_{{{n}}}"
+
+def IndexG(s: str, n: str) -> str:
+	return Index(s, f"\\{n}")
+
+def Power(s: str, n: str) -> str:
+	return f"{{{s}}}^{{{n}}}"
+
+def Func(s: str, func: str) -> str:
+	return f"\\{func}{{{s}}}"
+
+def Vec(s: str) -> str:
+	return Func(s, "vec")
+
+def Dot(s: str) -> str:
+	return Func(s, "dot")
+
+def Command(s: str, c: str):
+	if c in "nmijk" + digits:
+		return Index(s, c);
+	if c in ['a', 'b', 'w']:
+		return IndexG(s, c)
+	if c == "d":
+		return Dot(s)
+	if c == "v":
+		return Vec(s)
+	return s
+
+
+MATCH = r"([nmijkabwd\.v\d])\1+"
+STR = match.group()
+result = match.group(1)
+commands = re.findall(MATCH, STR)
+
+for c in commands:
+	result = Command(result, c)
+
+result += match.group(3)
+
+snip.rv = result
+`
+endsnippet
