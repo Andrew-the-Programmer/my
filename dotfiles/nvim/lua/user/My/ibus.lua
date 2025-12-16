@@ -31,7 +31,6 @@ function M.ibus_emoji()
 		[2] = "🇨🇳",
 	}
     emoji = lang_map[cur_lang]
-    print(cur_lang, emoji)
 	return emoji
 end
 

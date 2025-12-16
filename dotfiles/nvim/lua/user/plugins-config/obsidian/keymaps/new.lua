@@ -94,7 +94,6 @@ local mappings = {
 					return
 				end
 				-- note:add_alias(new_title)
-                print(new_title, new_id)
 				note.id = new_id
 				note.title = new_title
 				note:save()

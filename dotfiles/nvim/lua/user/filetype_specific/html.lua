@@ -3,7 +3,6 @@ local Keymap = My.keymaps.Keymap
 local keymaps = {
 	Keymap:new_nvim("v", "<localleader>s", function()
 		local from, to = My.nvim.GetVisualSelection()
-		print(from.col, to.col)
 		local text = My.nvim.GetText(from, to)
 		vim.ui.input({ prompt = "Tag and args: " }, function(input)
 			local tag, args = string.match(input, "([a-z]+)(.*)")

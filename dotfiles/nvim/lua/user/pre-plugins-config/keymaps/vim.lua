@@ -98,10 +98,7 @@ return {
 				return My.lua.ListFind({ "texMathZoneTI", "texMathZoneTD", "mkdMath" }, v)
 			end) and not My.lua.ListFind(ft, "texMathText")
 		then
-			print()
 			table.insert(ft, "Math")
 		end
-
-		My.lua.Print(ft)
 	end, { desc = "Print syntax stack" }),
 }

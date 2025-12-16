@@ -52,20 +52,6 @@ return {
 			keymap("n", "M", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 		end
 
-		--[[
-        -- Nothing ever happens
-        vim.api.nvim_create_autocmd("LspAttach", {
-			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-			callback = function(ev)
-				print("hello")
-				-- Buffer local mappings.
-				-- See `:help vim.lsp.*` for documentation on any of the below functions
-				local opts = { buffer = ev.buf }
-				SetLspKeymaps(opts)
-	    end,
-		})
-        --]]
-
 		SetLspKeymaps({})
 
 		-- used to enable autocompletion (assign to every lsp server config)

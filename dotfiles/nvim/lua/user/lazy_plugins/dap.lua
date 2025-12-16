@@ -41,7 +41,6 @@ return {
 					request = "launch",
 					program = function()
                         local file = vim.fn.expand("%:p:h:h") .. "/out/debug/Solution"
-                        print(file)
                         return file
 					end,
 					cwd = "${workspaceFolder}",

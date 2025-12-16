@@ -28,7 +28,7 @@ return {
 			end, {
 				actions = {
 					["default"] = function(selected)
-						print(selected[1])
+						-- print(selected[1])
 					end,
 				},
 			})

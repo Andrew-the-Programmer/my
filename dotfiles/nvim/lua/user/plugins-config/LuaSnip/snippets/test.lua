@@ -38,10 +38,7 @@ end
 ---@param line_to_cursor string
 ---@param trigger string
 function M.bol_matcher(line_to_cursor, trigger)
-	My.lua.Print(string.format("bol line: %s", line_to_cursor))
-	My.lua.Print(string.format("bol trigger: %s", trigger))
 	local m = line_to_cursor:match("^" .. trigger .. "$")
-	My.lua.Print(m)
 	return m, {}
 end
 
