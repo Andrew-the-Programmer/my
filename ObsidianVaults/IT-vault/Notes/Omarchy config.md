@@ -170,3 +170,9 @@ Clone pass repo
 ```bash
 git clone git@github.com:Andrew-the-Programmer/pass-password-manager-storage.git ~/.password-store
 ```
+
+# No waybar issue
+
+[github](https://github.com/basecamp/omarchy/issues/1363)
+
+Fix: `hyprctl dispatch exec waybar`

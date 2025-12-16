@@ -278,8 +278,19 @@ function pdf2png() {
   inkscape "$file" "--export-type=$ext"
 }
 
-alias vpn-status='echo "Your IP is: $(my-public-ip)"'
-alias vpn-up='sudo tailscale up && sudo tailscale set --exit-node="fi-vmpico" && vpn-status'
+function vpn-connection() {
+  tailscale status --json | grep "\"ExitNode\": true" >/dev/null
+  connected=$?
+  if [ $connected -eq 0 ]; then
+    echo "Connected to VPN"
+  else
+    echo "NOT connected to VPN"
+  fi
+  return $connected
+}
+
+alias vpn-status='vpn-connection; echo "Your IP is: $(my-public-ip)"'
+alias vpn-up='sudo tailscale up && sudo tailscale set --exit-node=auto:any && vpn-status'
 alias vpn-down='sudo tailscale set --exit-node= && vpn-status'
 alias vpn-restart='vpn-down && vpn-up'
 
