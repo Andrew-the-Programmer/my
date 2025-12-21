@@ -320,3 +320,11 @@ function gpg-export() {
   gpg --export --armor $key_id >"$dir/public-key.asc"
   #scp -r "$dir" "$target:$dir"
 }
+
+nvim-app() {
+    NVIM_APPNAME="$1" nvim
+}
+
+alias nvim-my='nvim-app nvim-my'
+alias nvim-omarchy='nvim-app nvim-omarchy'
+alias nvim-lazyvim='nvim-app nvim-lazyvim'

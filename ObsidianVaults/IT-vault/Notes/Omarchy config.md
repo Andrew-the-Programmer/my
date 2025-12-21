@@ -139,7 +139,45 @@ bindeld = ,XF86MonBrightnessDown, Logarithmic brightness down, exec, ~/.local/bi
 
 # Nvim
 
-A lot to change...
+```bash
+.
+├── init.lua
+├── lazy-lock.json
+├── lazyvim.json
+├── LICENSE
+├── lua
+│   ├── config
+│   │   ├── autocmds.lua
+│   │   ├── keymaps.lua
+│   │   ├── lazy.lua
+│   │   └── options.lua
+│   └── plugins
+│       ├── example.lua
+│       ├── my
+│       │   └── oil.lua
+│       ├── omarchy
+│       │   ├── all-themes.lua
+│       │   ├── disable-news-alert.lua
+│       │   ├── omarchy-theme-hotreload.lua
+│       │   └── snacks-animated-scrolling-off.lua
+│       └── theme.lua -> /home/andrew/.config/omarchy/current/theme/neovim.lua
+├── plugin
+│   └── after
+│       └── transparency.lua
+├── README.md
+└── stylua.toml
+```
+
+
+Extras:
+
+1. lang
+	1. python
+2. ai
+	1. avante
+3. editor
+	1. harpoon2
+
 # Pass
 
 Export GPG key
