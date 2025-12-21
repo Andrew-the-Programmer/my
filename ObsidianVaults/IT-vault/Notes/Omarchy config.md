@@ -139,6 +139,22 @@ bindeld = ,XF86MonBrightnessDown, Logarithmic brightness down, exec, ~/.local/bi
 
 # Nvim
 
+LazyVim is a base for omarchy config.
+Omarchy adds theme support and some minor things.
+
+plugins/omarchy
+plugins/my-plugins
+
+theme.lua -> /home/andrew/.config/omarchy/current/theme/neovim.lua
+
+[LazyVim Keymaps](https://www.lazyvim.org/keymaps)
+
+Extras:
+1. [lazyvim.plugins.extras.ai.avante](https://www.lazyvim.org/extras/ai/avante)
+2. [lazyvim.plugins.extras.editor.harpoon2](https://www.lazyvim.org/extras/editor/harpoon2)
+
+[[LazyVim Keymaps]]
+
 A lot to change...
 # Pass
 
