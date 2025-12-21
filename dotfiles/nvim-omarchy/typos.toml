@@ -1,2 +1,0 @@
-[files]
-extend-exclude = [ "*/LuaSnip/snippets/latex/math.lua" ]
