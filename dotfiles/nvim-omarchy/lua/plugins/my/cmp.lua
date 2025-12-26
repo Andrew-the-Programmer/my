@@ -27,6 +27,20 @@ return {
 
     local lspkind = require("lspkind")
 
+    cmp.setup.cmdline(":", {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = "path" },
+      }, {
+        {
+          name = "cmdline",
+          option = {
+            ignore_cmds = { "Man", "!" },
+          },
+        },
+      }),
+    })
+
     opts.formatting = {
       expandable_indicator = true,
       format = lspkind.cmp_format({
