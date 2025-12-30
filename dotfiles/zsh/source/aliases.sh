@@ -328,3 +328,29 @@ nvim-app() {
 alias nvim-my='nvim-app nvim-my'
 alias nvim-omarchy='nvim-app nvim-omarchy'
 alias nvim-lazyvim='nvim-app nvim-lazyvim'
+
+function cat-all() {
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --nd)
+      nd=1
+      shift
+      ;;
+    *)
+      args+=("$1")
+      shift
+      ;;
+    esac
+  done
+
+  if [ -z "$nd" ]; then
+    args+=("-not" "-path" "*/.git/*" "-type" "f")
+  fi
+
+  for file in $(find "${args[@]}"); do
+    echo "# FILE: $file"
+    echo "\`\`\`"
+    cat "$file"
+    echo "\`\`\`"
+  done
+}
