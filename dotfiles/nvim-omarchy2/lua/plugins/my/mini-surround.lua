@@ -1,5 +1,6 @@
 return {
   "nvim-mini/mini.surround",
+  enabled = false,
   keys = function(_, keys)
     -- Populate the keys based on the user's options
     local opts = LazyVim.opts("mini.surround")
@@ -42,12 +43,12 @@ return {
   opts = function(_, opts)
     opts.mappings = {
       add = "S",
-      delete = "gsd", -- Delete surrounding
-      find = "gsf", -- Find surrounding (to the right)
-      find_left = "gsF", -- Find surrounding (to the left)
-      highlight = "gsh", -- Highlight surrounding
-      replace = "gsr", -- Replace surrounding
-      update_n_lines = "gsn", -- Update `n_lines`
+      delete = "gsd",
+      find = "gsf",
+      find_left = "gsF",
+      highlight = "gsh",
+      replace = "gsr",
+      update_n_lines = "gsn",
     }
   end,
 }

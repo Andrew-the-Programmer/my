@@ -7,5 +7,5 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
-vim.notify("autocmds: Loading layout switcher", vim.log.levels.INFO)
-require("layout-switcher").setup()
+-- vim.notify("autocmds: Loading layout switcher", vim.log.levels.INFO)
+-- require("layout-switcher").setup()
