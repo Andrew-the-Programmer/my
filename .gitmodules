@@ -1,0 +1,3 @@
+[submodule "ObsidianVaults/fpmi-ML-2020/github"]
+	path = ObsidianVaults/fpmi-ML-2020/github
+	url = git@github.com:girafe-ai/ml-course.git
