@@ -66,7 +66,7 @@ alias j="jump"
 alias zz="z -"
 
 function ChdirToScriptDir() {
-  cd "$(dirname "$0")" || exit
+  cd "$(dirname "$0")" || return 1
 }
 
 function ldir() {
@@ -98,7 +98,7 @@ function mkdir_cd() {
   /usr/bin/mkdir "${args[@]}" "${pos_args[@]}"
 
   if [ ! -z "$do_cd" ] && [ "${#pos_args[@]}" -eq 1 ]; then
-    builtin cd "${pos_args[@]}" || exit 1
+    builtin cd "${pos_args[@]}" || return 1
   fi
 }
 
@@ -267,7 +267,7 @@ function pdf2png() {
       ;;
     -* | --*)
       echo "Unknown option $1"
-      exit 1
+      return 1
       ;;
     *)
       file="$1"
@@ -297,7 +297,7 @@ function gpg-export() {
       ;;
     -* | --*)
       echo "Unknown option $1"
-      exit 1
+      return 1
       ;;
     *)
       key_id="$1"
@@ -308,7 +308,7 @@ function gpg-export() {
 
   if [ -z "$key_id" ]; then
     echo "Please provide a key id"
-    exit 1
+    return 1
   fi
 
   if [ -z "$dir" ]; then
@@ -353,4 +353,65 @@ function cat-all() {
     cat "$file"
     echo "\`\`\`"
   done
+}
+
+function copy-to-nextcloud() {
+  local files=()
+
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+    --user)
+      user="$2"
+      shift 2
+      ;;
+    --target-directory)
+      target="$2"
+      shift 2
+      ;;
+    -f | --overwrite)
+      overwrite=yes
+      shift
+      ;;
+    *)
+      files+=("$1")
+      shift
+      ;;
+    esac
+  done
+
+  if [ -z "$user" ]; then
+    echo "Please provide a --user" && return 1
+  fi
+  if ! [ -z "$target" ]; then
+    target="$target/"
+  fi
+
+  # copy-to-nextcloud --user Andrew --target-directory ЦУ ~/OBS/собес\ ЦУ\ 14-01-26.mp4
+
+  docker_container="manual-install-nextcloud-aio-nextcloud-1"
+  datadirectory=$(docker exec "$docker_container" awk -F"'" '/datadirectory/ {print $4}' /var/www/html/config/config.php)
+
+  dst="$datadirectory/$user/files/$target"
+
+  docker exec "$docker_container" mkdir -p "$dst"
+
+  for file in "${files[@]}"; do
+    exists=$(docker exec "$docker_container" find "$dst" -name "$(basename "$file")")
+    exists=yes
+    if [ -n "$exists" ] && [ -z "$overwrite" ]; then
+      echo "File $(basename "$file") exists in $target. Overwrite? (y/N):"
+      read -r reply
+    else
+      reply="y"
+    fi
+    if [[ $reply =~ ^[Yy]$ ]]; then
+      echo "copy file: $file"
+      docker cp "$file" "$docker_container:$dst"
+    else
+      echo "Copy cancelled."
+    fi
+  done
+
+  docker exec "$docker_container" chown -R www-data:www-data "$dst"
+  docker exec -u www-data "$docker_container" php occ files:scan "$user"
 }
