@@ -18,6 +18,8 @@ alias lgit="lazygit"
 
 alias oil="nvim +StartOil"
 
+alias dc="docker-compose"
+
 function require_clean_work_tree() {
   # Update the index
   git update-index -q --ignore-submodules --refresh

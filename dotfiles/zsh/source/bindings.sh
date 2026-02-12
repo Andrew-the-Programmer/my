@@ -1,0 +1,25 @@
+
+
+
+
+
+
+
+
+
+
+
+
+bindkey '^L' forward-chars # Finish completion: echo hi <CR> ech<^L> -> echo hi
+
+
+
+
+
+
+
+
+
+
+
+
