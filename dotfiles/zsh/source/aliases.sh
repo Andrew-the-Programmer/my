@@ -95,8 +95,10 @@ alias ....='cd ../../..'
 alias d='docker'
 alias r='rails'
 # nvim
-n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
+alias n='nvim'
 alias g='git'
+alias t='tailscale'
+alias tsa='tailscale status --active'
 
 function ChdirToScriptDir() {
   cd "$(dirname "$0")" || return 1
